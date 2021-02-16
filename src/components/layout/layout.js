@@ -32,7 +32,7 @@ const Layout = ({ children }) => {
     <>
       <Container fluid>
         <Row>
-          <Col>
+          <Col className={["px-0"].join(" ")}>
             <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
             <main>{children}</main>
             <Footer />

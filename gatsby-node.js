@@ -5,6 +5,39 @@ exports.createPages = ({ graphql, actions }) => {
 
   return new Promise((resolve, reject) => {
     const blogPost = path.resolve("./src/templates/blog-post.js")
+    const page = path.resolve("./src/templates/page.js")
+    resolve(
+      graphql(
+        `
+          {
+            allContentfulPage {
+              edges {
+                node {
+                  title
+                  slug
+                }
+              }
+            }
+          }
+        `
+      ).then(result => {
+        if (result.errors) {
+          console.log(result.errors)
+          reject(result.errors)
+        }
+
+        const pages = result.data.allContentfulPage.edges
+        pages.forEach(p => {
+          createPage({
+            path: `/${p.node.slug}/`,
+            component: page,
+            context: {
+              slug: p.node.slug,
+            },
+          })
+        })
+      })
+    )
     resolve(
       graphql(
         `
