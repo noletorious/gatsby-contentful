@@ -1,5 +1,4 @@
 const dotenv = require("dotenv")
-
 if (process.env.NODE_ENV !== "production") {
   dotenv.config()
 }
@@ -13,9 +12,19 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [
+          `Zilla Slab`,
+          `source sans pro\:300,400,400i,700`, // you can also specify font weights and styles
+        ],
+        display: "swap",
+      },
+    },
+    {
       resolve: `gatsby-source-contentful`,
       options: {
-        spaceId: `urtxgqudl2qq`,
+        spaceId: process.env.SPACE_ID,
         // Learn about environment variables: https://gatsby.dev/env-vars
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
